@@ -11,13 +11,8 @@ return require('packer').startup(function(use)
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 
-	use ({
-		"rose-pine/nvim",
-		as = "rose-pine",
-		config = function()
-			vim.cmd('colorscheme rose-pine')
-		end
-    })
+    use 'Mofiqul/vscode.nvim'
+
     use {
         "williamboman/mason.nvim",
         run = ":MasonUpdate" -- :MasonUpdate updates registry contents
