@@ -30,9 +30,9 @@ return require('packer').startup(function(use)
         branch = 'v2.x',
 
         -- Autocompletion
-        { 'hrsh7th/nvim-cmp' }, -- Required
+        { 'hrsh7th/nvim-cmp' },     -- Required
         { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-        { 'L3MON4D3/LuaSnip' }, -- Required
+        { 'L3MON4D3/LuaSnip' },     -- Required
     }
 
     use {
@@ -43,4 +43,11 @@ return require('packer').startup(function(use)
     }
 
     use('theprimeagen/vim-be-good')
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    })
+
+    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install",
+        setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 end)
