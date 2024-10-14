@@ -288,7 +288,7 @@ require('lazy').setup({
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
       require('which-key').setup()
-   end,
+    end,
   },
 
   -- NOTE: Plugins can specify dependencies.
