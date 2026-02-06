@@ -6,6 +6,12 @@ require("blink.cmp").setup({
         nerd_font_variant = "mono",
     },
     sources = { default = { "lsp", "path", "snippets", "buffer" } },
+    fuzzy = {
+        prebuilt_binaries = {
+            download = true,
+            force_version = "v1.9.1",
+        },
+    },
 })
 
 -- 2. Native LSP Setup (0.12)
@@ -19,6 +25,19 @@ vim.lsp.config("omnisharp", {
     enable_import_completion = true,
 })
 vim.lsp.enable("omnisharp")
+
+-- ADD THIS: TypeScript / JavaScript
+vim.lsp.config("ts_ls", {
+    cmd = { "typescript-language-server", "--stdio" },
+})
+vim.lsp.enable("ts_ls")
+
+-- ADD THIS: JSON (Helpful for manifest.json)
+-- Run: npm install -g vscode-langservers-extracted
+vim.lsp.config("jsonls", {
+    cmd = { "vscode-json-language-server", "--stdio" },
+})
+vim.lsp.enable("jsonls")
 
 -- C / C++ (Clangd)
 vim.lsp.config("clangd", { cmd = { "clangd" } })
@@ -39,19 +58,29 @@ vim.lsp.enable("lua_ls")
 -- 3. Autoformatting
 require("conform").setup({
     notify_on_error = false,
-    format_on_save = { timeout_ms = 500, lsp_fallback = true },
     formatters_by_ft = {
         lua = { 'stylua' },
         c_sharp = { 'csharpier' },
+        javascript = { "prettier" },
+        typescript = { "prettier" },
+        javascriptreact = { "prettier" },
+        typescriptreact = { "prettier" },
+        json = { "prettier" },
+        html = { "prettier" },
+        css = { "prettier" },
     },
 })
 
 -- 4. Keymaps (LspAttach)
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        client.server_capabilities.semanticTokensProvider = nil
+
         local map = function(keys, func, desc)
             vim.keymap.set("n", keys, func, { buffer = args.buf, desc = "LSP: " .. desc })
         end
+
         map("gd", vim.lsp.buf.definition, "Goto Definition")
         map("gr", vim.lsp.buf.references, "Goto References")
         map("K", vim.lsp.buf.hover, "Hover Documentation")
