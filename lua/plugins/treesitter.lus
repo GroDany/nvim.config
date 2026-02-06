@@ -1,0 +1,9 @@
+require("nvim-treesitter.configs").setup({
+    ensure_installed = { 
+        "c", "c_sharp", "lua", "vim", "vimdoc", "markdown", 
+        "gdscript", "godot_resource", "gdshader", "bash", "diff" 
+    },
+    auto_install = true,
+    highlight = { enable = true },
+    indent = { enable = true },
+})
