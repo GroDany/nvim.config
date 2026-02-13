@@ -22,5 +22,4 @@ map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous Diagnostic' })
 map('n', ']d', vim.diagnostic.goto_next, { desc = 'Next Diagnostic' })
 map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show Error' })
 
-map('x', 'p', '_dP', {noremap = true, silent = true})
--- map("x", "p", [["_dP]])
+map("v", "p", [["_dP]], { noremap = true, silent = true, desc = "Paste without overwriting register" })
